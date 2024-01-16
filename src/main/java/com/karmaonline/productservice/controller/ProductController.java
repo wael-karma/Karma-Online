@@ -28,9 +28,21 @@ public class ProductController {
 
     @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable String productId) {
-        Product product = productService.getProductById(productId);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        try {
+            Product product = productService.getProductById(productId);
+
+            if (product != null) {
+                return ResponseEntity.ok(product);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            // Log the exception for further investigation
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 
     @PostMapping
     public ResponseEntity<Product> addProduct(@RequestBody Product product) {

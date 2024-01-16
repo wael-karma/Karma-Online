@@ -24,8 +24,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(String productId) {
-        return productRepository.findById(productId)
-                .orElseThrow(() -> new NoSuchElementException("Product not found"));
+        return productRepository.findById(productId).orElse(null);
     }
 
     @Override
