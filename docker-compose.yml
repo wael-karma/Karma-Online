@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - mynetwork
+
+  spring-app:
+    image: springapp
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
